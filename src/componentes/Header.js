@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { Formulario, Button } from "./Form";
 import styled from "styled-components";
+import GetColor from "../GetColor";
+
 
 const Cabecera = styled.header`
   background-color: #313131;
@@ -24,75 +26,33 @@ const StyledButton = styled.button`
   border: none;
   border-radius: 20px;
   color: #fff;
-  background-color: ${(props) => getColor(props.tipo)};
+  background-color: ${(props) => GetColor(props.tipo)};
 `;
-
-const getColor = (tipo) => {
-  switch (tipo) {
-    case "Normal":
-      return "#A8A77A";
-    case "Fire":
-      return "#EE8130";
-    case "Water":
-      return "#6390F0";
-    case "Electric":
-      return "#F7D02C";
-    case "Grass":
-      return "#7AC74C";
-    case "Ice":
-      return "#96D9D6";
-    case "Fighting":
-      return "#C22E28";
-    case "Poison":
-      return "#A33EA1";
-    case "Ground":
-      return "#E2BF65";
-    case "Flying":
-      return "#A98FF3";
-    case "Psychic":
-      return "#F95587";
-    case "Bug":
-      return "#A6B91A";
-    case "Rock":
-      return "#B6A136";
-    case "Ghost":
-      return "#735797";
-    case "Dragon":
-      return "#6F35FC";
-    case "Dark":
-      return "#705746";
-    case "Steel":
-      return "#B7B7CE";
-    case "Fairy":
-      return "#D685AD";
-    default:
-      return "#ccc"; // Color por defecto o para tipos no especificados
-  }
-};
 
 const Header = ({ setBusqueda, setBusquedaTipo, reset }) => {
   const navigate = useNavigate();
 
   const tiposPokemon = [
-    "Normal",
-    "Fire",
-    "Water",
-    "Electric",
-    "Grass",
-    "Ice",
-    "Fighting",
-    "Poison",
-    "Ground",
-    "Flying",
-    "Psychic",
-    "Bug",
-    "Rock",
-    "Ghost",
-    "Dragon",
-    "Dark",
-    "Steel",
-    "Fairy",
+    "normal",
+    "fire",
+    "water",
+    "electric",
+    "grass",
+    "ice",
+    "fighting",
+    "poison",
+    "ground",
+    "flying",
+    "psychic",
+    "bug",
+    "rock",
+    "ghost",
+    "dragon",
+    "dark",
+    "steel",
+    "fairy",
   ];
+  
 
   return (
     <Cabecera>
