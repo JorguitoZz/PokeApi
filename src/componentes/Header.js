@@ -96,6 +96,7 @@ const Header = ({ setBusqueda, setBusquedaTipo, reset }) => {
 
   return (
     <Cabecera>
+      <img src="https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi_256.png"/>
       <H2>Buscar</H2>
       <Formulario setBusqueda={setBusqueda} />
       <div>
