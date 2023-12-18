@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
-import Formulario from "./componentes/Form";
-import Pokemons from "./componentes/Pokemons";
 import usePokemonData from "./dataFuction";
+import Header from "./componentes/Header";
+import { Routes, Route } from "react-router-dom";
+import Home from "./Pages/Home";
+import Pokemon from "./Pages/Pokemon"
+import styled from "styled-components";
+
 
 const App = () => {
   const {
@@ -9,28 +12,20 @@ const App = () => {
     setBusqueda,
     setBusquedaTipo,
     cargarMasPokemon, 
-    reset 
+    reset,
+    setPokemons,
   } = usePokemonData();
 
-  
+
   return (
-    <div>
-      <header>
-        <h2>Buscar</h2>
-        <Formulario setBusqueda={setBusqueda} />
+    <>
+      <Header setBusqueda={setBusqueda} setBusquedaTipo={setBusquedaTipo} reset={reset}/>
 
-        <button onClick={() => reset()}>Resetear</button>
-
-        <button onClick={() => setBusquedaTipo("normal")}>prueba</button>
-      </header>
-
-      <main>
-        <Pokemons pokemons={pokemons} />
-        <div>
-          <button onClick={cargarMasPokemon}>Cargar más</button>
-        </div>
-      </main>
-    </div>
+      <Routes>
+        <Route path="/" element={<Home pokemons={pokemons} cargarMasPokemon={cargarMasPokemon} />} />
+        <Route path="/pokemon/:name" element={<Pokemon />} />
+      </Routes>
+    </>
   );
 };
 

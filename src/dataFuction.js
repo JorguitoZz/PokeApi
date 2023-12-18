@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const usePokemonData = () => {
 
@@ -42,13 +42,14 @@ const cargarPokemons = async (url) => {
     }else if(data.pokemon) {
 
 
-
       const pokemonData = await Promise.all(
         data.pokemon.map(async (pokemon) => {
           const details = await fetchData(pokemon.pokemon.url);
+          
           return details ? transformarDatos(details) : null;
         })
       );
+      
       setPokemons(pokemonData.filter((pokemon) => pokemon !== null));
 
     } else {
@@ -73,14 +74,17 @@ const transformarDatos = (details) => {
   };
 };
 
+
+
 // Función para buscar Pokémon según el término de búsqueda
 const buscarPokemon = async () => {
   if (busqueda.trim() !== "") {
+    
     // Construir la URL para buscar un Pokémon específico
     const url = `https://pokeapi.co/api/v2/pokemon/${busqueda.toLowerCase()}`;
     cargarPokemons(url);
   }else if (busquedaTipo.trim() !=="") {
-
+    
     const url = `https://pokeapi.co/api/v2/type/${busquedaTipo.toLowerCase()}`;
     cargarPokemons(url)
   } else {
@@ -109,7 +113,8 @@ return {
   setBusqueda,
   setBusquedaTipo,
   cargarMasPokemon, 
-  reset 
+  reset,
+  setPokemons,
 };
 
 }
