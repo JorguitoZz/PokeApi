@@ -70,7 +70,7 @@ const Header = ({ setBusqueda, setBusquedaTipo, reset }) => {
             {tipo}
           </StyledButton>
         ))}
-        <Button onClick={() => navigate(-1)}>back</Button>
+        <Button onClick={() => navigate('/')}>back</Button>
       </div>
     </Cabecera>
   );
