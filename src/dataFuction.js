@@ -79,24 +79,19 @@ const transformarDatos = (details) => {
 // Función para buscar Pokémon según el término de búsqueda
 const buscarPokemon = async () => {
   try {
-
-    set
+    setIsLoading(true); // Establecer isLoading en true al comenzar la búsqueda
 
     if (busqueda.trim() !== "") {
-    
-      // Construir la URL para buscar un Pokémon específico
       const url = `https://pokeapi.co/api/v2/pokemon/${busqueda.toLowerCase()}`;
-      cargarPokemons(url);
-    }else if (busquedaTipo.trim() !=="") {
-      
+      await cargarPokemons(url);
+    } else if (busquedaTipo.trim() !== "") {
       const url = `https://pokeapi.co/api/v2/type/${busquedaTipo.toLowerCase()}`;
-      cargarPokemons(url)
+      await cargarPokemons(url);
     } else {
-      // Construir la URL para cargar más Pokémon
       cargarPokemons(`https://pokeapi.co/api/v2/pokemon/?limit=${carga}`);
-    }  
-  }finally{
-    
+    }
+  } finally {
+    setIsLoading(false); // Establecer isLoading en false al finalizar la búsqueda, independientemente de si hubo un error
   }
   
   

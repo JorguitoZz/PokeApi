@@ -28,35 +28,31 @@ const StyledButton = styled.button`
   color: #fff;
   background-color: ${(props) => GetColor(props.tipo)};
 `;
-const tiposPokemon = [
-  "normal",
-  "fire",
-  "water",
-  "electric",
-  "grass",
-  "ice",
-  "fighting",
-  "poison",
-  "ground",
-  "flying",
-  "psychic",
-  "bug",
-  "rock",
-  "ghost",
-  "dragon",
-  "dark",
-  "steel",
-  "fairy",
-];
-
 
 const Header = ({ setBusqueda, setBusquedaTipo, reset }) => {
   const navigate = useNavigate();
 
-  const handleBuscarTipo = (tipo) => {
-    reset(); // Limpia la búsqueda específica y por tipo
-    setBusquedaTipo(tipo);
-  };
+  const tiposPokemon = [
+    "normal",
+    "fire",
+    "water",
+    "electric",
+    "grass",
+    "ice",
+    "fighting",
+    "poison",
+    "ground",
+    "flying",
+    "psychic",
+    "bug",
+    "rock",
+    "ghost",
+    "dragon",
+    "dark",
+    "steel",
+    "fairy",
+  ];
+  
 
   return (
     <Cabecera>
@@ -68,7 +64,7 @@ const Header = ({ setBusqueda, setBusquedaTipo, reset }) => {
         {tiposPokemon.map((tipo) => (
           <StyledButton
             key={tipo}
-            onClick={() => handleBuscarTipo(tipo)}
+            onClick={() => setBusquedaTipo(tipo)}
             tipo={tipo}
           >
             {tipo}

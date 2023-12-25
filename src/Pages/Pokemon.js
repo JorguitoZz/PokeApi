@@ -93,6 +93,8 @@ const Pokemon = () => {
   };
   
 
+  console.log(pokemon)
+
   useEffect(() => {
     const fetchPokemonData = async () => {
       try {
