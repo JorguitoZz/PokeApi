@@ -6,6 +6,7 @@ const usePokemonData = () => {
   const [carga, setCarga] = useState(20);
   const [busqueda, setBusqueda] = useState("");
   const [busquedaTipo, setBusquedaTipo] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
  
 
   // Función asincrónica para obtener datos de la API
@@ -78,23 +79,27 @@ const transformarDatos = (details) => {
 
 // Función para buscar Pokémon según el término de búsqueda
 const buscarPokemon = async () => {
-  if (busqueda.trim() !== "") {
-    
-    // Construir la URL para buscar un Pokémon específico
-    const url = `https://pokeapi.co/api/v2/pokemon/${busqueda.toLowerCase()}`;
-    cargarPokemons(url);
-  }else if (busquedaTipo.trim() !=="") {
-    
-    const url = `https://pokeapi.co/api/v2/type/${busquedaTipo.toLowerCase()}`;
-    cargarPokemons(url)
-  } else {
-    // Construir la URL para cargar más Pokémon
-    cargarPokemons(`https://pokeapi.co/api/v2/pokemon/?limit=${carga}`);
+  try {
+    setIsLoading(true); // Establecer isLoading en true al comenzar la búsqueda
+
+    if (busqueda.trim() !== "") {
+      const url = `https://pokeapi.co/api/v2/pokemon/${busqueda.toLowerCase()}`;
+      await cargarPokemons(url);
+    } else if (busquedaTipo.trim() !== "") {
+      const url = `https://pokeapi.co/api/v2/type/${busquedaTipo.toLowerCase()}`;
+      await cargarPokemons(url);
+    } else {
+      cargarPokemons(`https://pokeapi.co/api/v2/pokemon/?limit=${carga}`);
+    }
+  } finally {
+    setIsLoading(false); // Establecer isLoading en false al finalizar la búsqueda, independientemente de si hubo un error
   }
 };
 
 // Efecto que se ejecuta al cambiar la carga o el término de búsqueda
 useEffect(() => {
+  
+  
   buscarPokemon();
 }, [carga, busqueda, busquedaTipo]);
 
@@ -110,6 +115,7 @@ const reset = () => {
 
 return {
   pokemons,
+  isLoading,
   setBusqueda,
   setBusquedaTipo,
   cargarMasPokemon, 
