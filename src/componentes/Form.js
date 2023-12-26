@@ -22,7 +22,8 @@ const Button = styled.button`
     background: #000;
     border: none;
     padding: 10px 15px;
-    border-radius: 20px
+    border-radius: 20px;
+    cursor: pointer;
 `
 
 const Formulario = ({ setBusqueda }) => {
