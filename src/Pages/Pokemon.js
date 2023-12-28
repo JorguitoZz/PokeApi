@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import GetColor from "../GetColor";
-
+import Loader from "../componentes/Loader";
 
 const H3 = styled.h2`
   font-size: 40px;
@@ -78,6 +78,7 @@ const Pokemon = () => {
   const { name } = useParams();
   const pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${name}`;
   const [pokemon, setPokemon] = useState(null);
+  const [loading, setloading] = useState(false)
 
   const transformarDatos = (details) => {
     return {
@@ -98,12 +99,15 @@ const Pokemon = () => {
   useEffect(() => {
     const fetchPokemonData = async () => {
       try {
+        setloading(true)
         const response = await fetch(pokemonUrl);
         const data = await response.json();
         setPokemon(transformarDatos(data));
 
       } catch (error) {
         console.error(error);
+      }finally{
+        setloading(false)
       }
     };
 
@@ -113,36 +117,49 @@ const Pokemon = () => {
   console.log(pokemon);
 
   return (
-    <Contenedor>
-    {pokemon && (
-      <>
-        <H3>{pokemon.name} N.º {pokemon.number}</H3>
-        <PokemonContainer>
-          <PokemonImg src={pokemon.image} alt={pokemon.name} />
-          <PokemonStat>
-            <div>
-            {pokemon.types.map((tipo, index) => (
-                <Type key={index} name={tipo.type.name}>{tipo.type.name}</Type>
-              ))}
+  <>
+    
+    {loading ? (
+      <Loader />
+    ) : (
+      /* Si la carga ha finalizado, renderiza el contenido del Pokémon */
+      <Contenedor>
+        {pokemon && (
+          <>
 
-            </div>
-            <ContainerData>
-              <Parrafo>Exp: {pokemon.exp}</Parrafo>
-              <Parrafo>weight: {pokemon.weight}</Parrafo>
-              {pokemon.abilities.map((abilite, index) => (
-                  <Parrafo key={index}>Habilidad: {abilite.ability.name}</Parrafo>
-              ))}
-              {pokemon.stats.map((stat, index) => (
-                  <Parrafo key={index}>{stat.stat.name}: {stat.base_stat}</Parrafo>
-              ))}
-            </ContainerData>
-          </PokemonStat>
-        </PokemonContainer>
-         
-      </>
+            <H3>{pokemon.name} N.º {pokemon.number}</H3>
+            <PokemonContainer>
+
+              <PokemonImg src={pokemon.image} alt={pokemon.name} />
+              <PokemonStat>
+                <div>
+                  {pokemon.types.map((tipo, index) => (
+                    <Type key={index} name={tipo.type.name}>{tipo.type.name}</Type>
+                  ))}
+                </div>
+                {/* Datos adicionales del Pokémon */}
+                <ContainerData>
+                  <Parrafo>Exp: {pokemon.exp}</Parrafo>
+                  <Parrafo>Weight: {pokemon.weight}</Parrafo>
+                  {/* Habilidades del Pokémon */}
+                  {pokemon.abilities.map((abilite, index) => (
+                    <Parrafo key={index}>Habilidad: {abilite.ability.name}</Parrafo>
+                  ))}
+                  {/* Estadísticas del Pokémon */}
+                  {pokemon.stats.map((stat, index) => (
+                    <Parrafo key={index}>{stat.stat.name}: {stat.base_stat}</Parrafo>
+                  ))}
+                </ContainerData>
+              </PokemonStat>
+            </PokemonContainer>
+          </>
+        )}
+      </Contenedor>
     )}
-    </Contenedor>
-  );  
+  </>
+);
+
+
 };
 
 export default Pokemon;
