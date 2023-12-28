@@ -4,6 +4,7 @@ import styled from "styled-components";
 import GetColor from "../GetColor";
 
 
+
 const Cabecera = styled.header`
   background-color: #313131;
   color: #fff;
@@ -29,7 +30,9 @@ const StyledButton = styled.button`
   background-color: ${(props) => GetColor(props.tipo)};
 `;
 
-const Header = ({ setBusqueda, setBusquedaTipo, reset }) => {
+const Header = ({ setBusqueda, setBusquedaTipo, reset, clickTipo, setClickTipo }) => {
+
+
   const navigate = useNavigate();
 
   const tiposPokemon = [
@@ -60,11 +63,20 @@ const Header = ({ setBusqueda, setBusquedaTipo, reset }) => {
       <H2>Buscar</H2>
       <Formulario setBusqueda={setBusqueda} />
       <div>
-        <Button onClick={() => reset()}>Resetear</Button>
+        <Button onClick={() => {
+          reset() 
+          setClickTipo(false)
+        }}>Resetear</Button>
+        
         {tiposPokemon.map((tipo) => (
           <StyledButton
             key={tipo}
-            onClick={() => setBusquedaTipo(tipo)}
+            onClick={() => {
+              setBusquedaTipo(tipo)
+              if (!clickTipo) {
+                setClickTipo(true)
+              }
+            }}
             tipo={tipo}
           >
             {tipo}

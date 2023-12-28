@@ -1,5 +1,7 @@
 import styled from "styled-components"
 import Pokemons from "../componentes/Pokemons"
+import Loader from "../componentes/Loader"
+
 
 const Button = styled.button`
     color: #fff;
@@ -12,15 +14,17 @@ const Button = styled.button`
     cursor: pointer;
 `
 
-const Home = ({ pokemons, cargarMasPokemon }) =>{
+const Home = ({ pokemons, cargarMasPokemon, loading, clickTipo}) =>{
 
     return(
         <main>
-            <Pokemons pokemons={pokemons} />
+          {loading ? <Loader/> : <Pokemons pokemons={pokemons} />}
+            {!clickTipo ?
             <div>
-                <Button onClick={()=>{cargarMasPokemon(
-                    )}}>Cargar Mas</Button>
+                <Button onClick={()=>
+                {cargarMasPokemon()}}>Cargar Mas</Button>
             </div>
+            : null}
       </main>
     )
 
