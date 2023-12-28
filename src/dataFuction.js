@@ -94,6 +94,7 @@ const usePokemonData = () => {
   const reset = () => {
     setBusquedaTipo("");
     setBusqueda("");
+    setPokemons([])
   };
 
   return {
